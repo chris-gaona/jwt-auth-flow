@@ -2,6 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const passport = require('passport')
 const bodyParser = require('body-parser')
+const cors = require('cors')
+const cookieParser = require('cookie-parser')
 const dotenv = require('dotenv')
 
 const UserModel = require('./models/User')
@@ -21,6 +23,8 @@ const secure = require('./routes/secure')
 
 const app = express()
 
+app.use(cors())
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 
