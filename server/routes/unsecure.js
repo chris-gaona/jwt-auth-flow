@@ -99,7 +99,7 @@ router.get('/refresh-token',
       })
     } catch (error) {
       res.clearCookie('refreshToken')
-      res.status(error.status || 500)
+      res.status(error.status || 401)
       res.json({ error })
     }
   }

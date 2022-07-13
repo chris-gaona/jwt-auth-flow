@@ -62,6 +62,7 @@ function AppProvider({ children }) {
       } catch (error) {
         alert('Refresh token expired')
         router.replace('/')
+        clearInterval(intervalTimer)
         console.log('ERROR', error)
       }
     }, 60000 - 10000)

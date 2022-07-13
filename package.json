@@ -4,11 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start:server": "node ./server/app.js",
     "dev:server": "nodemon ./server/app.js",
-    "dev:app": "nodemon ./server.js",
+    "dev:app": "nodemon ./src/server.js",
     "build": "next build",
-    "start:app": "next start",
     "lint": "next lint"
   },
   "dependencies": {
