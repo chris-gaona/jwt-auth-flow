@@ -63,6 +63,7 @@ function HomePage() {
       console.log('login response', res)
       appContext?.setToken(res.data.token)
       router.replace('/profile')
+      alert(res?.data?.message)
     } catch (error) {
       console.log('ERROR', error)
     }

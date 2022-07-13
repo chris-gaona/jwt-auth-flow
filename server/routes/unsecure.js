@@ -59,7 +59,10 @@ router.post(
               // Send the refreshToken in an httpOnly cookie
               res.cookie('refreshToken', refreshToken, { httpOnly: true })
 
-              return res.json({ token })
+              return res.json({
+                message: 'Login successful',
+                token
+              })
             }
           )
         } catch (error) {
@@ -94,7 +97,15 @@ router.get('/refresh-token',
     } catch (error) {
       return next(error)
     }
+  }
+)
 
+router.get('/logout',
+  async (req, res, next) => {
+    res.clearCookie('refreshToken')
+    res.json({
+      message: 'Logout successful',
+    })
   }
 )
 
