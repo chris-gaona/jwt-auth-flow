@@ -2,6 +2,8 @@
   https://www.digitalocean.com/community/tutorials/api-authentication-with-json-web-tokensjwt-and-passport
   
   https://github.com/auth0/node-jsonwebtoken
+
+  https://jakeowen-ex.medium.com/secure-api-authentication-with-nextjs-http-only-cookie-b4ea0569bbfc
 */
 
 const express = require('express')

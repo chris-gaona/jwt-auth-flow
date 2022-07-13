@@ -44,7 +44,7 @@ router.post(
                 expiresIn: '1m'
               })
               const refreshToken = jwt.sign({ user: body }, process.env.REFRESH_KEY, {
-                expiresIn: '3m'
+                expiresIn: '2m'
               })
 
               /*
@@ -57,7 +57,7 @@ router.post(
                   Secure — When the Secure flag is set, the cookie can only be sent from HTTPS enabled sites and to HTTPS URLs. You should set this flag within your production setup to provide further protection.
               */
               // Send the refreshToken in an httpOnly cookie
-              res.cookie('refreshToken', refreshToken, { httpOnly: true })
+              res.cookie('refreshToken', refreshToken, { httpOnly: true, path: '/' })
 
               return res.json({
                 message: 'Login successful',
@@ -93,9 +93,14 @@ router.get('/refresh-token',
         expiresIn: '1m'
       })
   
-      return res.json({ token })
+      return res.json({
+        message: 'Refresh successful',
+        token
+      })
     } catch (error) {
-      return next(error)
+      res.clearCookie('refreshToken')
+      res.status(error.status || 500)
+      res.json({ error })
     }
   }
 )

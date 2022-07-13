@@ -1,5 +1,13 @@
 import * as React from 'react'
+import axios from 'axios'
 import { useRouter } from 'next/router'
+
+const instance = axios.create({
+  baseURL: "http://localhost:3000",
+  headers: {
+    "Content-Type": "application/json",
+  },
+})
 
 let AppContext
 const { Provider, Consumer } = (AppContext =
@@ -20,17 +28,42 @@ function AppProvider({ children }) {
   const [token, setToken] = React.useState(null)
 
   React.useEffect(() => {
+    console.log('REFRESHING ACCESS TOKEN ON PAGE LOAD!!')
+    ;(async () => {
+      try {
+        const res = await instance.get("/api/refresh-token")
+        console.log('res.data.token', res.data.token)
+        if (res.data.token) {
+          setToken(res.data.token)
+          router.replace('/profile')
+        }
+      } catch (error) {
+        router.replace('/')
+        console.log('ERROR', error)
+      }
+    })()
+  }, [])
+
+  React.useEffect(() => {
     let intervalTimer
     if (!token) {
       // Clear the interval to refresh the access token
       if (intervalTimer) clearInterval(intervalTimer)
-      router.replace('/')
       return
     }
     
     // Setup interval to refresh the access token every 10 seconds before it'll expire
-    intervalTimer = setInterval(() => {
+    intervalTimer = setInterval(async () => {
       console.log('REFRESHING ACCESS TOKEN!!')
+      try {
+        const res = await instance.get("/api/refresh-token")
+        console.log('refresh response', res)
+        alert(res?.data?.message)
+      } catch (error) {
+        alert('Refresh token expired')
+        router.replace('/')
+        console.log('ERROR', error)
+      }
     }, 60000 - 10000)
 
     return () => {
