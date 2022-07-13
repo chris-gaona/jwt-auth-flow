@@ -29,7 +29,8 @@ router.post(
       async (err, user, info) => {
         try {
           if (err || !user) {
-            const error = new Error('An error occurred.')
+            const error = new Error('The username or password is incorrect. Please try again.')
+            error.status = 400
             return next(error)
           }
 

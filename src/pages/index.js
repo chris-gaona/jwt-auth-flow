@@ -66,6 +66,7 @@ function HomePage() {
       alert(res?.data?.message)
     } catch (error) {
       console.log('ERROR', error)
+      alert(error?.response?.data?.error || `An error occurred. Please try again.`)
     }
 
     setIsLoading(false)

@@ -37,7 +37,7 @@ app.use('/user', passport.authenticate('jwt', { session: false }), secure)
 app.use(function(err, req, res, next) {
   console.log('ERROR', err)
   res.status(err.status || 500)
-  res.json({ error: err })
+  res.json({ error: err.message })
 })
 
 app.listen(process.env.SERVER_PORT, () => {
