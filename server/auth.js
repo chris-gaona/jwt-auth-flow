@@ -64,6 +64,19 @@ passport.use(
     },
     async (token, done) => {
       try {
+        // Verify the token audience & issuer
+        if (token.aud !== process.env.AUDIENCE) {
+          const error = new Error(`The aud claim in the token is invalid.`)
+          error.status = 401
+          return done(error)
+        }
+
+        if (token.iss !== process.env.ISSUER) {
+          const error = new Error(`The iss claim in the token is invalid.`)
+          error.status = 401
+          return done(error)
+        }
+
         return done(null, token.user);
       } catch (error) {
         done(error);

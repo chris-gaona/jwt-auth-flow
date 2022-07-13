@@ -42,10 +42,16 @@ router.post(
 
               const body = { _id: user._id, email: user.email }
               const token = jwt.sign({ user: body }, process.env.SECRET_KEY, {
-                expiresIn: '1m'
+                expiresIn: '1m',
+                audience: process.env.AUDIENCE,
+                issuer: process.env.ISSUER,
+                subject: 'access'
               })
               const refreshToken = jwt.sign({ user: body }, process.env.REFRESH_KEY, {
-                expiresIn: '2m'
+                expiresIn: '2m',
+                audience: process.env.AUDIENCE,
+                issuer: process.env.ISSUER,
+                subject: 'refresh'
               })
 
               /*
@@ -91,7 +97,10 @@ router.get('/refresh-token',
       }
   
       const token = jwt.sign({ user: parsedRefreshToken.user }, process.env.SECRET_KEY, {
-        expiresIn: '1m'
+        expiresIn: '1m',
+        audience: process.env.AUDIENCE,
+        issuer: process.env.ISSUER,
+        subject: 'access'
       })
   
       return res.json({
