@@ -72,6 +72,8 @@ function HomePage() {
     setIsLoading(false)
   }
 
+  if (appContext?.isLoading || appContext?.token) return null
+
   return (
     <div className="login-page">
       <h1 className="header-text">JWT Auth Flow</h1>

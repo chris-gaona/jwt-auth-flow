@@ -24,11 +24,13 @@ function useAppContext() {
 function AppProvider({ children }) {
   const router = useRouter()
 
+  const [isLoading, setIsLoading] = React.useState(false)
   // NOTE: the access token from the server will only ever be stored in memory
   const [token, setToken] = React.useState(null)
 
   React.useEffect(() => {
     console.log('REFRESHING ACCESS TOKEN ON PAGE LOAD!!')
+    setIsLoading(true)
     ;(async () => {
       try {
         const res = await instance.get("/api/refresh-token")
@@ -39,6 +41,8 @@ function AppProvider({ children }) {
       } catch (error) {
         router.replace('/')
         console.log('ERROR', error)
+      } finally {
+        setIsLoading(false)
       }
     })()
   }, [])
@@ -73,7 +77,7 @@ function AppProvider({ children }) {
 
   return (
     <Provider
-      value={{ token, setToken }}
+      value={{ isLoading, token, setToken }}
     >
       {children}
     </Provider>
