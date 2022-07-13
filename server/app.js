@@ -1,3 +1,9 @@
+/*
+  https://www.digitalocean.com/community/tutorials/api-authentication-with-json-web-tokensjwt-and-passport
+  
+  https://github.com/auth0/node-jsonwebtoken
+*/
+
 const express = require('express')
 const mongoose = require('mongoose')
 const passport = require('passport')

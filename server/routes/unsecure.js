@@ -47,6 +47,15 @@ router.post(
                 expiresIn: '3m'
               })
 
+              /*
+                  HttpOnly: This sets the flag HttpOnly within the browser, the cookie, therefore, cannot be accessed from client-side javascript scripts, providing protection against XSS attacks.
+
+                  Max-Age — The maximum age of the cookie in seconds. This will be set in the browser under Expires . The value set will be currentTime + maxAge .
+
+                  Path — If you do not include a path, the cookie will only be set on the page that received the cookie. If the user refreshes, navigates to a new page, or closes the browser, the cookie will be removed. By setting the path to / it will persist across your whole site.
+
+                  Secure — When the Secure flag is set, the cookie can only be sent from HTTPS enabled sites and to HTTPS URLs. You should set this flag within your production setup to provide further protection.
+              */
               // Send the refreshToken in an httpOnly cookie
               res.cookie('refreshToken', refreshToken, { httpOnly: true })
 
